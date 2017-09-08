@@ -58,7 +58,18 @@ public class RaterDatabase {
                     ourRaters.put(raterID,rater);
                  }
                  rater.addRating(movieID,rating);
-    } 
+    }
+    
+    public ArrayList<Rating> getSimilarities(String id) {
+    	ArrayList<Rating> rList = new ArrayList<Rating>();
+    	Rater me = RaterDatabase.getRater(id);
+    	// add dot_product(r,me) to list if tRater != me
+    	for (Rater tRater: RaterDatabase.getRaters()) {
+    		
+    	}
+    	Collections.sort(rList, Collections.reverseOrder());
+    	return rList;
+    }
 	         
     public static Rater getRater(String id) {
     	initialize();
