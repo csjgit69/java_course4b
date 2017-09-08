@@ -28,16 +28,16 @@ public class RaterDatabase {
 		}
 	}
 
-    public static void initialize(String filename) {
+    public static void initialize(String fName) {
  		if (ourRaters == null) {
  			ourRaters= new HashMap<String,Rater>();
- 			addRatings("data/" + filename);
+ 			addRatings("data/" + fName);
  		}
  	}	
  	
-    public static void addRatings(String filename) {
-        initialize(); 
-        FileResource fr = new FileResource(filename);
+    public static void addRatings(String fName) {
+        initialize();
+        FileResource fr = new FileResource("data/" + fName);
         CSVParser csvp = fr.getCSVParser();
         for(CSVRecord rec : csvp) {
                 String id = rec.get("rater_id");
@@ -60,7 +60,7 @@ public class RaterDatabase {
                  rater.addRating(movieID,rating);
     }
     
-    public ArrayList<Rating> getSimilarities(String id) {
+    private ArrayList<Rating> getSimilarities(String id) {
     	ArrayList<Rating> rList = new ArrayList<Rating>();
     	Rater me = RaterDatabase.getRater(id);
     	// add dot_product(r,me) to list if tRater != me
@@ -69,6 +69,22 @@ public class RaterDatabase {
     	}
     	Collections.sort(rList, Collections.reverseOrder());
     	return rList;
+    }
+    
+    public ArrayList<Rating> getRecommendations(String id, int numRaters) {
+    	ArrayList<Rating> rList = getSimilarities(id);
+    	ArrayList<Rating> ret = new ArrayList<Rating>();
+    	
+    	for (String movieID: MovieDatabase.filterBy(new FilterTrue("True"))) {
+    		for (int k=0; k < numRaters; k++) {
+    			Rating r = rList.get(k);
+    			// use Rater id and weight in r to update running totals
+    			
+    		}
+    	}
+    	
+    	Collections.sort(ret, Collections.reverseOrder());
+    	return ret;
     }
 	         
     public static Rater getRater(String id) {

@@ -105,7 +105,7 @@ public class SecondRatings {
      * This method getID that has one parameter:
      *   a String parameter named title representing the title of a movie
      * This method returns the movie ID of this movie. 
-     * If the title is not found, return an appropriate message such as “NO SUCH TITLE.” 
+     * If the title is not found, return an appropriate message such as "NO SUCH TITLE." 
      * Note that the movie title must be spelled exactly as it appears in the movie data files.	
      */
     	System.out.println("Get Movie ID for: "+title);
@@ -121,9 +121,9 @@ public class SecondRatings {
     /*
      * This method getAverageRatingOneMovie, has no parameters
      * This method will print out the average ratings for a specific movie title, 
-     * such as the movie “The Godfather”. If the moviefile is set to the file named ratedmovies_short.csv, 
+     * such as the movie The Godfather. If the moviefile is set to the file named ratedmovies_short.csv, 
      * and the ratingsfile is set to the file ratings_short.csv, then the average for the movie 
-     * “The Godfather” would be 9.0.	
+     * The Godfather would be 9.0.	
      */
     	
     	double avg = getAverageByID(getID(title), 1);

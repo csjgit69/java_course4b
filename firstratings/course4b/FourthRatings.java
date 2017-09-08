@@ -3,44 +3,7 @@ package course4b;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ThirdRatings {
-    //private ArrayList<Movie> myMovies;
-    private ArrayList<Rater> myRaters;
-    
-    public ThirdRatings (String ratingsFile) {
-        /*
-         * Write an additional SecondRatings constructor that has two String parameters 
-         *   named moviefile and ratingsfile. 
-         * The constructor should create a FirstRatings object 
-         * and then call the loadMovies and loadRaters methods in FirstRatings to read in all the movie 
-         * and ratings data and store them in the two private ArrayList variables of the SecondRatings class, 
-         * myMovies and myRaters.	
-         */    	
-    	FirstRatings ratings = new FirstRatings();
- 		//myMovies = ratings.loadMovies(movieFile, false);
- 		myRaters = ratings.loadRaters(ratingsFile, false);	
-    }
-    
-    public ThirdRatings() {
-        // default constructor
-        this("ratings.csv");
-    }
-    
-//    public int getMovieSize() {
-//    	/*
-//    	 * This method getMovieSize, returns the number of movies that were read in and stored in 
-//    	 * the ArrayList of type Movie.	
-//    	 */    	
-//    	return myMovies.size();
-//    }
-    
-    public int getRaterSize() {
-    	/*
-    	 * This method getRaterSize, returns the number of raters that were read in and stored in 
-    	 * the ArrayList of type Rater.	
-    	 */    	
-    	return myRaters.size();
-    }
+public class FourthRatings {
 
     public double getAverageByID(String movieID, int minRaters) {
     	/*
@@ -67,29 +30,7 @@ public class ThirdRatings {
     		return 0.0;
     	}
     }
-        
-    public double getAverageRatingOneMovie(String title, boolean printAll) {
-    /*
-     * This method getAverageRatingOneMovie, has no parameters
-     * This method will print out the average ratings for a specific movie title, 
-     * such as the movie â€œThe Godfatherâ€�. If the moviefile is set to the file named ratedmovies_short.csv, 
-     * and the ratingsfile is set to the file ratings_short.csv, then the average for the movie 
-     * â€œThe Godfatherâ€� would be 9.0.	
-     */
-    	ArrayList<String> myMovies = MovieDatabase.filterBy(new FilterTrue("True"));
-    	double avg = 0.0;
-    	for (String movieID: myMovies) {
-    		if (MovieDatabase.getTitle(movieID).equals(title)) {
-    			avg = getAverageByID(movieID, 1);    			
-    		}
-    	}
-    	if (printAll) {
-    		System.out.println("--- In getAverageRatingOneMovie ---");
-    		System.out.println("Average for movie \""+title+"\" is: "+avg+"\n");
-    	}
-    	return avg;
-    }
-    
+
     public ArrayList<Rating> getAverageRatings (int minRaters, boolean printAll) {
         /*
          * This public method, getAverageRatings, has one parameter:
@@ -118,7 +59,7 @@ public class ThirdRatings {
        	}
         return rateList;
     }
-       
+
     public void printAverageRatings (int minRaters, boolean printAll) {
         /*
          * This public method, getAverageRatings, has one parameter:
@@ -145,7 +86,7 @@ public class ThirdRatings {
        		}
        	}
     }
-   
+
     public ArrayList<Rating> getAverageRatingsByFilter (int minRaters, Filter mFilter) {
         ArrayList<Rating> rateList = new ArrayList<Rating>();        
     	//ArrayList<String> myMovies = MovieDatabase.filterBy(new FilterTrue());        	
@@ -182,6 +123,6 @@ public class ThirdRatings {
        		}
        	}
     }
-
+    
     
 }
