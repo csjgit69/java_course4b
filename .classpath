@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="firstratings"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="/Users/sjohnson/git/java_course4b/apache-csv 1.03.47 PM.jar"/>
+	<classpathentry kind="lib" path="/Users/sjohnson/git/java_course4b/courserajava 1.02.38 PM.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
