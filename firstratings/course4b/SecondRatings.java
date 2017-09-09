@@ -150,7 +150,7 @@ public class SecondRatings {
          * You should consider calling the private getAverageByID method.
          */
         ArrayList<Rating> rateList = new ArrayList<Rating>();
-        	
+         	
        	for (Movie tMovie: myMovies) {
        		String movieID = tMovie.getID();
        		double tempAvg = getAverageByID(movieID, minRaters);

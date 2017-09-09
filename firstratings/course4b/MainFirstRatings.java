@@ -13,7 +13,8 @@ public class MainFirstRatings {
 		// TODO Auto-generated method stub
 		MainFirstRatings testFR = new MainFirstRatings();
 		
-		testFR.quiz3();
+		testFR.testFourthRatings();
+		//testFR.quiz3();
 		//testFR.testThirdRatings();
 		//testFR.quiz2();
 		//testFR.testSecondRatings();
@@ -21,12 +22,30 @@ public class MainFirstRatings {
 		//testFR.testFirstRatings();
 	}
 	
-	public void quiz3() {
-		
-		String mName = "ratedmoviesfull.csv";
-		String mPath = "../data_ratings/"+mName;
+	public void testFourthRatings() {	
+		String movieFile = "ratedmoviesfull.csv";
+		String raterFile = "ratings.csv";
 		ThirdRatings testSR = new ThirdRatings("ratings.csv");
-		MovieDatabase.initialize(mPath);
+		MovieDatabase.initialize(movieFile);
+		RaterDatabase.initialize(raterFile);
+		FiltersAll f = new FiltersAll();
+		
+		System.out.println("Number over movies read in: "+ MovieDatabase.size());
+		System.out.println("Number over raters read in: "+ testSR.getRaterSize());
+		System.out.println("");
+
+		System.out.println("-----");
+		System.out.println("*** Question #4: ");
+		f = new FiltersAll();
+		f.addFilter(new FilterTrue("True"));
+		testSR.printAverageRatingsByFilter(35, f, true);
+		System.out.println("-----");
+	}
+	
+	public void quiz3() {	
+		String movieFile = "ratedmoviesfull.csv";
+		ThirdRatings testSR = new ThirdRatings("ratings.csv");
+		MovieDatabase.initialize(movieFile);
 		FiltersAll f = new FiltersAll();
 		
 		System.out.println("Number over movies read in: "+ MovieDatabase.size());

@@ -32,7 +32,7 @@ public class FirstRatings {
 		 *   String aDirector,String aCountry, String aPoster, int theMinutes)
 		 */
 		ArrayList<Movie> movies = new ArrayList<Movie>();
-		
+		 
 		String fPath = "data_ratings/"+fName;
 		System.out.println("***** Processing Movie Data From: "+fPath+" *****");
 		FileResource file = new FileResource(fPath);
@@ -242,7 +242,7 @@ public class FirstRatings {
 	public void getRatingsPerMovie (ArrayList<Rater> rList, String mID, Boolean printAll) {
 		/*
 		 * Add code to find the number of ratings a particular movie has.
-		 * If you run this code on the file ratings_short.csv for the movie “1798709”, 
+		 * If you run this code on the file ratings_short.csv for the movie â€œ1798709â€�, 
 		 * you will see it was rated by four raters.	
 		 */
 		System.out.println("---- In Print Movie Raters ----");
