@@ -40,6 +40,7 @@ public class MainFirstRatings {
 		f.addFilter(new FilterTrue("True"));
 		testSR.printAverageRatingsByFilter(35, f, true);
 		System.out.println("-----");
+		
 	}
 	
 	public void quiz3() {	

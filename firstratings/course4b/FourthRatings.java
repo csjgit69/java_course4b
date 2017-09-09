@@ -57,7 +57,37 @@ public class FourthRatings {
     	return rList;
 	}
 	
-	public ArrayList<Rating> getSimilarRatings (String id, int numSimilarRaters, int minimalRaters) {
+	private ArrayList<Rating> similarRatings (String raterID, int numSimilarRaters, int minimalRaters, 
+											  ArrayList<Rating> simList, ArrayList<String> movies) {
+		/*
+		 * same code that is in the to getSimilarRatings(ByFilter) methods. 
+		 * avoid dup code
+		 */
+		ArrayList<Rating> rList = new ArrayList<Rating>();
+		
+		for (String mID: movies) {
+			double wAvg = 0;
+			double ratingsTotal  = 0;
+			double raterCnt = 0;
+			for (int k=0; k<numSimilarRaters; k++) {
+				double wRating = simList.get(k).getValue();
+				String rID = simList.get(k).getItem();
+				if (RaterDatabase.getRater(rID).hasRating(mID)) {
+					ratingsTotal += wRating * RaterDatabase.getRater(rID).getRating(mID);
+					raterCnt++;
+				}
+			}
+			if (raterCnt > minimalRaters) {
+				wAvg = ratingsTotal/raterCnt;
+				rList.add(new Rating(mID, wAvg));
+			}
+		}
+		Collections.sort(rList, Collections.reverseOrder());
+		return rList;
+	}
+
+	
+	public ArrayList<Rating> getSimilarRatings (String raterID, int numSimilarRaters, int minimalRaters) {
 		/*
 		 * Write the public method named getSimilarRatings, 
 		 *   three parameters: 
@@ -85,17 +115,24 @@ public class FourthRatings {
 		 *     divided by the total number of such ratings.
 		 *   This method returns an ArrayList of Ratings for movies and their calculated weighted ratings, in sorted order.
 		 */
-		ArrayList<Rating> rList = new ArrayList<Rating>();
+		// String raterID, int numSimilarRaters, int minimalRaters
+		ArrayList<Rating> simList = getSimilarities(raterID);
+		ArrayList<String> movies = MovieDatabase.filterBy(new FilterTrue("True"));
+		ArrayList<Rating> rList = similarRatings(raterID, numSimilarRaters, minimalRaters, simList, movies);
 		
+		Collections.sort(rList, Collections.reverseOrder());
 		return rList;
 	}
 	
-	public ArrayList<Rating> getSimilarRatingsByFilter (String id, int numSimilarRaters, int minimalRaters, Filter filterCriteria) {
+	public ArrayList<Rating> getSimilarRatingsByFilter (String raterID, int numSimilarRaters, int minimalRaters, Filter filterCriteria) {
 		/*
 		 * Same as getSimilarRatings but with a Filter on movies being compared.
 		 */
-		ArrayList<Rating> rList = new ArrayList<Rating>();
+		ArrayList<Rating> simList = getSimilarities(raterID);
+		ArrayList<String> movies = MovieDatabase.filterBy(filterCriteria);
+		ArrayList<Rating> rList = similarRatings(raterID, numSimilarRaters, minimalRaters, simList, movies);
 		
+		Collections.sort(rList, Collections.reverseOrder());
 		return rList;
 	}
 	
@@ -208,7 +245,7 @@ public class FourthRatings {
        			rateList.add(tempR);
        		}
        	}
-        return rateList;    	
+        return rateList;	
     }
 
     public void printAverageRatingsByFilter (int minRaters, Filter mFilter, boolean printAll) {
