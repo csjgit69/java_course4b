@@ -29,10 +29,10 @@ public class RaterDatabase {
 	}
 
     public static void initialize(String fName) {
- 		if (ourRaters == null) {
+ 		//if (ourRaters == null) {
  			ourRaters= new HashMap<String,Rater>();
  			addRatings(fName);
- 		}
+ 		//}
  	}	
  	
     public static void addRatings(String fName) {

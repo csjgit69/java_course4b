@@ -13,7 +13,8 @@ public class MainFirstRatings {
 		// TODO Auto-generated method stub
 		MainFirstRatings testFR = new MainFirstRatings();
 		
-		testFR.testFourthRatings();
+		testFR.quiz4();
+		//testFR.testFourthRatings();
 		//testFR.quiz3();
 		//testFR.testThirdRatings();
 		//testFR.quiz2();
@@ -22,25 +23,120 @@ public class MainFirstRatings {
 		//testFR.testFirstRatings();
 	}
 	
-	public void testFourthRatings() {	
+	public void quiz4() {	
 		String movieFile = "ratedmoviesfull.csv";
 		String raterFile = "ratings.csv";
-		ThirdRatings testSR = new ThirdRatings("ratings.csv");
+		FourthRatings testFR = new FourthRatings();
 		MovieDatabase.initialize(movieFile);
 		RaterDatabase.initialize(raterFile);
 		FiltersAll f = new FiltersAll();
+		ArrayList<String> dirs = new ArrayList<String>();
+		
+		raterFile = "ratings_test.csv";
+		RaterDatabase.initialize(raterFile);
+		System.out.println("Number over raters read in: "+ RaterDatabase.size());
+		System.out.println("Dot product for 20, 15: "+testFR.dotProduct(RaterDatabase.getRater("20"),RaterDatabase.getRater("15")));
+
+		raterFile = "ratings.csv";
+		RaterDatabase.initialize(raterFile);
+		System.out.println("Number over movies read in: "+ MovieDatabase.size());
+		System.out.println("Number over raters read in: "+ RaterDatabase.size());
+		System.out.println("");
+
+		System.out.println("-----");
+		System.out.println("*** Question #6: ");
+		testFR.printSimilarRatings("337", 3, 10, true);
+		
+		System.out.println("-----");
+		System.out.println("*** Question #7: ");
+		f = new FiltersAll();
+		f.addFilter(new FilterGenre("Mystery", "Genre"));
+		testFR.printSimilarRatingsByFilter("964", 5, 20, f, true);
+
+		System.out.println("-----");
+		System.out.println("*** Question #8: ");
+		testFR.printSimilarRatings("71", 5, 20, true);
+
+		System.out.println("-----");
+		System.out.println("*** Question #9: ");
+		//“Clint Eastwood,J.J. Abrams,Alfred Hitchcock,Sydney Pollack,David Cronenberg,Oliver Stone,Mike Leigh”
+		f = new FiltersAll();
+		dirs.add("Clint Eastwood");
+		dirs.add("J.J. Abrams");		
+		dirs.add("Alfred Hitchcock");
+		dirs.add("Sydney Pollack");
+		dirs.add("David Cronenberg");
+		dirs.add("Oliver Stone");
+		dirs.add("Mike Leigh");
+		f.addFilter(new FilterDirectors(dirs, "Directors"));
+		testFR.printSimilarRatingsByFilter("120", 2, 10, f, true);
+
+		System.out.println("-----");
+		System.out.println("*** Question #10: ");
+		f = new FiltersAll();
+		f.addFilter(new FilterGenre("Drama", "Genre"));
+		f.addFilter(new FilterTime(80, 160, "Time"));		
+		testFR.printSimilarRatingsByFilter("168", 3, 10, f, true);
+		
+		System.out.println("-----");
+		System.out.println("*** Question #10: ");
+		f = new FiltersAll();
+		f.addFilter(new FilterYearAfter(1975, "YearAfter"));
+		f.addFilter(new FilterTime(70, 200, "Time"));		
+		testFR.printSimilarRatingsByFilter("314", 5, 10, f, true);
+		
+	}
+
+	public void testFourthRatings() {	
+		String movieFile = "ratedmoviesfull.csv";
+		String raterFile = "ratings.csv";
+		FourthRatings testFR = new FourthRatings();
+		MovieDatabase.initialize(movieFile);
+		RaterDatabase.initialize(raterFile);
+		FiltersAll f = new FiltersAll();
+		ArrayList<String> dirs = new ArrayList<String>();
 		
 		System.out.println("Number over movies read in: "+ MovieDatabase.size());
-		System.out.println("Number over raters read in: "+ testSR.getRaterSize());
+		System.out.println("Number over raters read in: "+ RaterDatabase.size());
 		System.out.println("");
 
 		System.out.println("-----");
 		System.out.println("*** Question #4: ");
 		f = new FiltersAll();
 		f.addFilter(new FilterTrue("True"));
-		testSR.printAverageRatingsByFilter(35, f, true);
+		testFR.printAverageRatingsByFilter(35, f, true);
 		System.out.println("-----");
 		
+		testFR.printSimilarRatings("65", 5, 20, true);
+		
+		f = new FiltersAll();
+		f.addFilter(new FilterGenre("Action", "Genre"));
+		testFR.printSimilarRatingsByFilter("65", 5, 20, f, true);
+		
+		f = new FiltersAll();
+		dirs.add("Clint Eastwood");
+		dirs.add("Sydney Pollack");		
+		dirs.add("David Cronenberg");
+		dirs.add("Oliver Stone");
+		f.addFilter(new FilterDirectors(dirs, "Directors"));
+		testFR.printSimilarRatingsByFilter("1034", 3, 10, f, true);
+
+		f = new FiltersAll();
+		f.addFilter(new FilterGenre("Adventure", "Genre"));
+		f.addFilter(new FilterTime(100, 200, "Time"));		
+		testFR.printSimilarRatingsByFilter("65", 5, 10, f, true);
+		
+		f = new FiltersAll();
+		f.addFilter(new FilterYearAfter(2000, "YearAfter"));
+		f.addFilter(new FilterTime(80, 100, "Time"));		
+		testFR.printSimilarRatingsByFilter("65", 5, 10, f, true);
+		
+		raterFile = "ratings_test.csv";
+		RaterDatabase.initialize(raterFile);
+		System.out.println("Number over raters read in: "+ RaterDatabase.size());
+		System.out.println("Dot product for 20, 15: "+testFR.dotProduct(RaterDatabase.getRater("20"),RaterDatabase.getRater("15")));
+
+
 	}
 	
 	public void quiz3() {	
@@ -189,7 +285,7 @@ public class MainFirstRatings {
 	}
 
 	
-	public void quiz2() {
+/*	public void quiz2() {
 		SecondRatings tSRShort = new SecondRatings("ratedmovies_short.csv", "ratings_short.csv");
 		SecondRatings tSRLong  = new SecondRatings("ratedmoviesfull.csv", "ratings.csv");
 		String mName = "";
@@ -252,7 +348,7 @@ public class MainFirstRatings {
 		mName = "The Godfather";
 		System.out.println("Average rating for \""+mName+"\" is: "+tSRLong.getAverageRatingOneMovie(mName, false));		
 	}
-	
+*/	
 	public void quiz1 () {
 		FirstRatings tFR = new FirstRatings();
 		ArrayList<Movie> mList = new ArrayList<Movie>();

@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class FourthRatings {
 
-	private double dotProduct (Rater me, Rater r) {
+	public double dotProduct (Rater me, Rater r) {
 		/*
 		 * Write the private helper method named dotProduct
  		 *   two parameters:
@@ -15,11 +15,11 @@ public class FourthRatings {
  		 * This method will be called by getSimilarities.
 		 */
 		double ratingDP = 0;
-		ArrayList<String> mList = me.getItemsRated();
+		ArrayList<String> mList = me.getItemsRated();		
 		for (String id: mList) {
 			if (r.hasRating(id)) {
 				double myRating = me.getRating(id) - 5;
-				double rRating  = me.getRating(id) - 5;
+				double rRating  = r.getRating(id) - 5;
 				ratingDP	    = ratingDP + (myRating * rRating);
 			}
 		}
@@ -77,7 +77,7 @@ public class FourthRatings {
 					raterCnt++;
 				}
 			}
-			if (raterCnt > minimalRaters) {
+			if (raterCnt >= minimalRaters) {
 				wAvg = ratingsTotal/raterCnt;
 				rList.add(new Rating(mID, wAvg));
 			}
@@ -121,7 +121,7 @@ public class FourthRatings {
 		ArrayList<Rating> rList = similarRatings(raterID, numSimilarRaters, minimalRaters, simList, movies);
 		
 		Collections.sort(rList, Collections.reverseOrder());
-		return rList;
+		return getSimilarRatingsByFilter (raterID, numSimilarRaters, minimalRaters, new FilterTrue("True"));
 	}
 	
 	public ArrayList<Rating> getSimilarRatingsByFilter (String raterID, int numSimilarRaters, int minimalRaters, Filter filterCriteria) {
@@ -136,6 +136,44 @@ public class FourthRatings {
 		return rList;
 	}
 	
+    public void printSimilarRatings (String raterID, int minimalRaters, int numSimilarRaters, boolean printAll) {
+        /*
+         * 
+         */
+    	ArrayList<Rating> srList = getSimilarRatings(raterID, numSimilarRaters, minimalRaters);
+        	
+        Collections.sort(srList, Collections.reverseOrder()); // uses the compareTo method in Rating class to sort        
+       	if (printAll) {
+       		System.out.format("\n ---- Recommended movies for RaterID %s, numSimRaters: %d, minRaters/movie: %d\n", raterID, numSimilarRaters, minimalRaters );
+       		System.out.format(" ---- Movies Found: %d\n", srList.size());
+       		int pCnt = 0;
+           	for (Rating tRating: srList) {
+       			System.out.format("%.3f \"%s\"\n",tRating.getValue(),MovieDatabase.getTitle(tRating.getItem()));
+       			pCnt++;
+       			if (pCnt>10) break;
+       		}
+       	}
+    }
+	
+    public void printSimilarRatingsByFilter (String raterID, int minimalRaters, int numSimilarRaters, Filter filterCriteria, boolean printAll) {
+        /*
+         * 
+         */
+    	ArrayList<Rating> srList = getSimilarRatingsByFilter(raterID, numSimilarRaters, minimalRaters, filterCriteria);
+        	
+        Collections.sort(srList, Collections.reverseOrder()); // uses the compareTo method in Rating class to sort        
+       	if (printAll) {
+       		System.out.format("\n ---- Recommended movies for RaterID %s, numSimRaters: %d, minRaters/movie: %d\n", raterID, numSimilarRaters, minimalRaters );
+       		System.out.format(" ---- Movies Found: %d\n", srList.size());
+       		int pCnt = 0;
+           	for (Rating tRating: srList) {
+       			System.out.format("%.3f \"%s\"\n",tRating.getValue(),MovieDatabase.getTitle(tRating.getItem()));
+       			pCnt++;
+       			if (pCnt>10) break;
+       		}
+       	}
+    }
+    
     public ArrayList<Rating> getRecommendations(String id, int numRaters) {
     	ArrayList<Rating> rList = getSimilarities(id);
     	ArrayList<Rating> ret = new ArrayList<Rating>();
@@ -162,13 +200,12 @@ public class FourthRatings {
     	 */    	
     	int raters = 0;
     	double totalRatings = 0.0;
-		//System.out.println("Get Average for ID: "+movieID);    	
+		//System.out.println("Get Average for ID: "+movieID);
     	for(Rater tRater: RaterDatabase.getRaters()) {
-    		double rating = tRater.getRating(movieID);
     		// System.out.println("raterID: "+tRater.getID()+", rated: "+tRater.getItemsRated());
-    		if (rating != -1) {
+    		if (tRater.hasRating(movieID)) {
     			raters++;
-        		totalRatings = totalRatings + rating;
+        		totalRatings = totalRatings + tRater.getRating(movieID);
     		}
     	}
     	if (raters >= minRaters) {
