@@ -13,7 +13,8 @@ public class MainFirstRatings {
 		// TODO Auto-generated method stub
 		MainFirstRatings testFR = new MainFirstRatings();
 		
-		testFR.quiz4();
+		testFR.testCS();
+		//testFR.quiz4();
 		//testFR.testFourthRatings();
 		//testFR.quiz3();
 		//testFR.testThirdRatings();
@@ -21,6 +22,26 @@ public class MainFirstRatings {
 		//testFR.testSecondRatings();
 		//testFR.quiz1();
 		//testFR.testFirstRatings();
+	}
+	
+	public void testCS() {	
+		String movieFile = "ratedmoviesfull.csv";
+		String raterFile = "ratings.csv";
+		FourthRatings testFR = new FourthRatings();
+		MovieDatabase.initialize(movieFile);
+		RaterDatabase.initialize(raterFile);
+		FiltersAll f = new FiltersAll();
+		ArrayList<String> dirs = new ArrayList<String>();
+		
+		dirs.add("J.J. Abrams");
+		dirs.add("Oliver Stone");
+
+		f.addFilter(new FilterDirectors(dirs, "Directors"));
+
+		for(String m: MovieDatabase.filterBy(f)) {
+			//System.out.println(MovieDatabase.getTitle(m)+"  id: "+m);
+			System.out.println(m);
+		}
 	}
 	
 	public void quiz4() {	
@@ -67,8 +88,6 @@ public class MainFirstRatings {
 		dirs.add("Sydney Pollack");
 		dirs.add("David Cronenberg");
 		dirs.add("Oliver Stone");
-		dirs.add("Mike Leigh");
-		f.addFilter(new FilterDirectors(dirs, "Directors"));
 		testFR.printSimilarRatingsByFilter("120", 2, 10, f, true);
 
 		System.out.println("-----");
