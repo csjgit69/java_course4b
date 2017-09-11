@@ -9,7 +9,6 @@ public class RecommendationRunner implements Recommender {
 //		// TODO Auto-generated method stub
 //
 //	}
-	
 	 /**
      * This method returns a list of movie IDs that will be used to look up 
      * the movies in the MovieDatabase and present them to users to rate. 
@@ -52,6 +51,43 @@ public class RecommendationRunner implements Recommender {
      *        method getItemsToRate
      */
 	public void printRecommendationsFor (String webRaterID) {
+		FourthRatings tempFR = new FourthRatings();
 		
+		ArrayList<Rating> rList = tempFR.getSimilarRatingsByFilter (webRaterID, 0, 0, new FilterTrue("True"));
+		
+		int rCnt = 0;
+		System.out.println("<table>");
+		System.out.println("<tbody>");
+		for (Rating tRating: rList) {
+			String movieName  = MovieDatabase.getTitle(tRating.getItem());
+			int movieYear  = MovieDatabase.getYear(tRating.getItem());
+			String movieGenre = MovieDatabase.getGenres(tRating.getItem());
+		    System.out.println("<tr><td>"+movieName+"</td>"
+			                      +"<td>"+movieYear+"</td>"
+			                      +"<td>"+movieGenre+"</td></tr>");
+		    rCnt++;
+		    if (rCnt>10) break;
+		}
+		System.out.println("</tbody>");
+		System.out.println("</table>");
+		//<style> .movieTitle{//CSS Styling}
+		
+//		<table >
+//		<tbody>
+//			<tr>
+//				<td> </td>
+//				<td> </td>
+//				<td> </td>
+//				<td> </td>
+//			</tr>
+//			<tr>
+//				<td> </td>
+//				<td> </td>
+//				<td> </td>
+//				<td> </td>
+//			</tr>
+//		</tbody>
+//	</table>
 	}
+	
 }

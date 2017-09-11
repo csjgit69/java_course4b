@@ -137,9 +137,6 @@ public class FourthRatings {
 	}
 	
     public void printSimilarRatings (String raterID, int minimalRaters, int numSimilarRaters, boolean printAll) {
-        /*
-         * 
-         */
     	ArrayList<Rating> srList = getSimilarRatings(raterID, numSimilarRaters, minimalRaters);
         	
         Collections.sort(srList, Collections.reverseOrder()); // uses the compareTo method in Rating class to sort        
@@ -172,6 +169,33 @@ public class FourthRatings {
        			if (pCnt>10) break;
        		}
        	}
+    }
+    
+    public ArrayList<Rating> getRecommendations(String raterID, int numRaters) {
+    	ArrayList<Rating> slist = getSimilarities(id);
+    	ArrayList<Rating> rList = new ArrayList<Rating>();
+    	ArrayList<String> movies = MovieDatabase.filterBy(new FilterTrue("True"));
+    	
+    	getSimilarRatingsByFilter (raterID, numSimilarRaters, minimalRaters, new FilterTrue("True"));
+    	for(String movieID: movies) {
+        	double weightedAverage = 0;
+        	double sum = 0;
+        	int countRaters = 0;
+    		for(int k=0; k < numRaters; k++) {
+    			Rating r = slist.get(k);
+    			String raterID = r.getItem();
+    			double weight = r.getValue();
+    			Rater myRater = RaterDatabase.getRater(raterID);
+    			if(myRater.hasRating(movieID)) {
+    				countRaters++;
+    				sum += weight * myRater.getRating(movieID);
+    			}
+    		}
+    		weightedAverage = sum / countRaters;
+    		rList.add(new Rating(movieID, weightedAverage));
+    	}
+		Collections.sort(rList, Collections.reverseOrder());
+		return rList;
     }
     
     public ArrayList<Rating> getRecommendations(String id, int numRaters) {
